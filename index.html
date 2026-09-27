@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="青岛市应急安全教育宣传 H5：风险认知、情景模拟、知识测试、家庭应急包清单与求助电话。">
+<title>守护青岛 · 应急安全同行</title>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 3 5 7v9c0 6.5 4.5 11.6 11 13 6.5-1.4 11-6.5 11-13V7L16 3z" fill="%23F26430"/><path d="M10.5 16.5l3.6 3.6 7.4-7.8" stroke="white" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'>
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ==================== 设计令牌 ==================== */
+:root{
+  --navy-900:#071A30;
+  --navy-800:#0B2A4A;
+  --navy-700:#123C66;
+  --navy-600:#1A4E80;
+  --sea-500:#2E7CF6;
+  --sea-400:#4C94F8;
+  --cyan-400:#58C4F4;
+  --coral-500:#F26430;
+  --coral-400:#F67F52;
+  --amber-400:#F6C445;
+  --sand-50:#FBF8F1;
+  --sand-100:#F6F1E7;
+  --sand-200:#ECE4D2;
+  --ink-900:#16283C;
+  --ink-700:#33475C;
+  --ink-500:#5A6F85;
+  --green-500:#2E9E6B;
+  --white:#FFFFFF;
+  --radius-lg:22px;
+  --radius-md:16px;
+  --radius-sm:10px;
+  --shadow-card:0 10px 26px rgba(11,42,74,.10);
+  --font-sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  --font-serif:"Noto Serif SC","Songti SC","SimSun",serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-sans);
+  color:var(--ink-900);
+  background:
+    radial-gradient(1200px 600px at 20% -10%, #14406F 0%, transparent 60%),
+    radial-gradient(1000px 500px at 90% 110%, #0D3A5C 0%, transparent 55%),
+    var(--navy-900);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  line-height:1.6;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size:26px 26px;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--cyan-400);outline-offset:2px;border-radius:4px}
+
+/* ==================== 页面容器 ==================== */
+.stage{width:100%;display:flex;justify-content:center}
+.page{
+  width:100%;max-width:480px;
+  background:var(--sand-100);
+  position:relative;overflow:hidden;
+  box-shadow:0 0 80px rgba(0,0,0,.45);
+}
+@media(min-width:520px){
+  .page{margin:28px 0;border-radius:26px}
+  .stage{min-height:100vh}
+}
+
+/* ==================== 顶部进度条 ==================== */
+.progress-wrap{
+  position:fixed;top:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:480px;height:4px;z-index:90;
+  background:rgba(7,26,48,.25);
+}
+.progress-bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--coral-500),var(--amber-400));
+  transition:width .15s linear;
+  position:relative;
+}
+.progress-bar::after{
+  content:"";position:absolute;right:-4px;top:-2px;width:8px;height:8px;border-radius:50%;
+  background:var(--amber-400);box-shadow:0 0 10px var(--amber-400);
+}
+
+/* ==================== 通用章节 ==================== */
+.section{padding:52px 22px 30px;position:relative}
+.chapter{
+  display:flex;align-items:center;gap:10px;margin-bottom:10px;
+}
+.chapter .num{
+  font-family:var(--font-serif);font-weight:700;font-size:15px;letter-spacing:.12em;
+  color:var(--coral-500);
+  border:1.5px solid var(--coral-500);border-radius:999px;
+  padding:2px 12px;
+}
+.chapter .line{width:26px;height:2px;background:var(--coral-500);opacity:.55}
+.chapter .label{font-size:13px;font-weight:500;color:var(--ink-500);letter-spacing:.3em}
+.chapter-title{
+  font-size:27px;font-weight:900;line-height:1.3;letter-spacing:.01em;
+  display:flex;align-items:baseline;gap:10px;
+}
+.chapter-title .serif{
+  font-family:var(--font-serif);font-weight:700;
+  color:var(--coral-500);
+}
+.lead{font-size:14.5px;color:var(--ink-700);margin-top:10px;line-height:1.85}
+.hazard{
+  height:9px;border-radius:5px;margin:22px 0 0;
+  background:repeating-linear-gradient(-45deg,#F6C445 0 13px,#141414 13px 26px);
+  opacity:.85;
+}
+/* 滚动显现 */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.rv.on{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ==================== 封面 ==================== */
+.cover{
+  position:relative;height:100svh;min-height:620px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  color:var(--white);overflow:hidden;
+}
+.cover-bg{
+  position:absolute;inset:0;z-index:0;
+  background-image:url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/MfR6bVrDxoMcBVxcZVbcLbE5n5d');
+  background-size:cover;background-position:center 30%;
+  animation:coverZoom 14s ease-in-out infinite alternate;
+}
+@keyframes coverZoom{from{transform:scale(1)}to{transform:scale(1.08)}}
+.cover-veil{
+  position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(180deg,rgba(7,26,48,.30) 0%,rgba(7,26,48,.10) 38%,rgba(7,26,48,.92) 100%);
+}
+.cover-tag{
+  position:absolute;top:calc(env(safe-area-inset-top,0px) + 18px);left:50%;transform:translateX(-50%);
+  z-index:3;display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.16);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.35);border-radius:999px;
+  padding:7px 18px;font-size:13px;font-weight:500;letter-spacing:.18em;white-space:nowrap;
+}
+.cover-tag svg{width:15px;height:15px;flex:none}
+.cover-body{position:relative;z-index:2;padding:0 26px calc(env(safe-area-inset-bottom,0px) + 78px)}
+.cover-kicker{
+  font-size:13px;letter-spacing:.42em;color:var(--amber-400);
+  font-weight:700;margin-bottom:12px;
+}
+.cover-title{
+  font-size:42px;line-height:1.14;font-weight:900;letter-spacing:.02em;
+}
+.cover-title .hl{
+  color:var(--amber-400);
+  background:linear-gradient(120deg,#FFD77A,#F26430);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.cover-sub{
+  margin-top:14px;font-size:15px;color:rgba(255,255,255,.88);line-height:1.8;max-width:340px;
+}
+.cover-cta-row{display:flex;gap:12px;margin-top:26px}
+.btn-primary{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  background:linear-gradient(135deg,var(--coral-500),#E84A1B);
+  color:#fff;font-size:17px;font-weight:700;letter-spacing:.06em;
+  padding:16px 22px;border-radius:999px;
+  box-shadow:0 12px 26px rgba(232,74,27,.42), inset 0 1px 0 rgba(255,255,255,.3);
+  transition:transform .15s ease,box-shadow .15s ease;
+  animation:pulseBtn 2.2s ease-in-out infinite;
+}
+.btn-primary:active{transform:scale(.96)}
+@keyframes pulseBtn{0%,100%{box-shadow:0 12px 26px rgba(232,74,27,.42),inset 0 1px 0 rgba(255,255,255,.3)}50%{box-shadow:0 12px 34px rgba(232,74,27,.62),inset 0 1px 0 rgba(255,255,255,.3)}}
+.btn-ghost{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.4);
+  color:#fff;font-size:15px;font-weight:500;padding:16px 18px;border-radius:999px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:transform .15s ease,background .2s;
+}
+.btn-ghost:active{transform:scale(.96);background:rgba(255,255,255,.2)}
+.cover-scroll{
+  position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);left:50%;transform:translateX(-50%);
+  z-index:3;text-align:center;color:rgba(255,255,255,.75);font-size:11px;letter-spacing:.24em;
+}
+.cover-scroll svg{width:22px;height:22px;margin:2px auto 0;animation:scrollBounce 1.6s ease-in-out infinite}
+@keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(7px);opacity:1}}
+.cover-hazard{position:absolute;left:0;right:0;bottom:0;z-index:3;height:10px;opacity:.9}
+
+/* ==================== 波浪分隔 ==================== */
+.wave{display:block;width:100%;height:56px;margin-bottom:-1px}
+.wave.flip{transform:scaleY(-1);margin-top:-1px;margin-bottom:0}
+.wave.sand path{fill:var(--sand-100)}
+.wave.navy path{fill:var(--navy-800)}
+
+/* ==================== 序言 ==================== */
+.prologue{padding-top:6px}
+.quote-card{
+  background:var(--white);border-radius:var(--radius-lg);
+  padding:28px 24px;margin-top:26px;position:relative;
+  box-shadow:var(--shadow-card);
+  border-left:5px solid var(--coral-500);
+}
+.quote-card .quote-mark{
+  font-family:var(--font-serif);font-size:64px;line-height:.6;color:var(--coral-400);
+  display:block;margin-bottom:8px;opacity:.8;
+}
+.quote-card .q-text{
+  font-family:var(--font-serif);font-weight:600;font-size:19px;line-height:1.8;color:var(--ink-900);
+}
+.quote-card .q-by{margin-top:14px;font-size:13px;color:var(--ink-500);letter-spacing:.12em}
+.why-grid{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.why-item{
+  background:var(--white);border-radius:var(--radius-md);padding:18px 16px;
+  box-shadow:var(--shadow-card);display:flex;gap:12px;align-items:flex-start;
+}
+.why-item .ico{
+  width:40px;height:40px;flex:none;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+}
+.why-item .ico svg{width:22px;height:22px}
+.why-item h4{font-size:14.5px;font-weight:700}
+.why-item p{font-size:14px;color:var(--ink-500);margin-top:4px;line-height:1.65}
+.ico.sea{background:#E4EFFE;color:var(--sea-500)}
+.ico.coral{background:#FDE9E0;color:var(--coral-500)}
+.ico.amber{background:#FBF0D6;color:#C98A00}
+.ico.green{background:#E3F3EA;color:var(--green-500)}
+
+/* ==================== 风险认知（翻卡） ==================== */
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.flip{perspective:1100px;height:352px;border-radius:var(--radius-lg)}
+.flip-inner{
+  position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,.1,.2,1);
+}
+.flip.flipped .flip-inner{transform:rotateY(180deg)}
+.face{
+  position:absolute;inset:0;border-radius:var(--radius-lg);overflow:hidden;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  display:flex;flex-direction:column;background:var(--white);
+  box-shadow:var(--shadow-card);
+}
+.face-front .card-img{height:196px;flex:none;overflow:hidden;position:relative}
+.face-front .card-img img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .5s}
+.flip:hover .card-img img{transform:scale(1.06)}
+.face-front .card-name{
+  position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;
+  background:linear-gradient(180deg,transparent,rgba(7,26,48,.82));
+  color:#fff;font-size:16.5px;font-weight:900;letter-spacing:.08em;
+}
+.face-front .flip-hint{
+  margin:auto;padding:11px 0 13px;display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:12px;color:var(--ink-500);letter-spacing:.14em;
+}
+.face-front .flip-hint svg{width:15px;height:15px;transition:transform .3s}
+.flip:hover .flip-hint svg{transform:rotate(180deg)}
+.face-back{
+  transform:rotateY(180deg);padding:18px 16px 14px;color:#fff;
+  justify-content:flex-start;
+}
+.face-back.navy1{background:linear-gradient(160deg,#123C66,#0B2A4A)}
+.face-back.navy2{background:linear-gradient(160deg,#7A3A1C,#4A2010)}
+.face-back h4{
+  font-size:16px;font-weight:900;letter-spacing:.06em;display:flex;align-items:center;gap:8px;
+}
+.face-back h4 svg{width:18px;height:18px;color:var(--amber-400)}
+.face-back .blk{margin-top:12px}
+.face-back .blk-label{
+  font-size:11px;letter-spacing:.2em;color:var(--amber-400);font-weight:700;margin-bottom:6px;
+}
+.face-back ul{list-style:none}
+.face-back li{
+  font-size:14px;line-height:1.5;color:rgba(255,255,255,.92);
+  padding:3px 0 3px 14px;position:relative;
+}
+.face-back li::before{
+  content:"";position:absolute;left:0;top:12px;width:6px;height:6px;border-radius:50%;
+  background:var(--coral-400);
+}
+.face-back .back-tip{
+  margin-top:auto;font-size:11px;color:rgba(255,255,255,.55);
+  display:flex;align-items:center;gap:5px;padding-top:10px;
+}
+.face-back .back-tip svg{width:13px;height:13px}
+
+/* ==================== 情景模拟（深色） ==================== */
+.scenario{background:var(--navy-800);color:#fff}
+.scenario .chapter-title{color:#fff}
+.scenario .lead{color:rgba(255,255,255,.78)}
+.scenario .chapter .label{color:rgba(255,255,255,.6)}
+.scenario .chapter .num{border-color:var(--amber-400);color:var(--amber-400)}
+.scenario .chapter .line{background:var(--amber-400)}
+.scene{
+  margin-top:26px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-lg);
+  overflow:hidden;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.scene-img{height:168px;overflow:hidden;position:relative}
+.scene-img img{width:100%;height:100%;object-fit:cover;object-position:center}
+.scene-img .scene-no{
+  position:absolute;top:12px;left:12px;background:rgba(7,26,48,.72);color:var(--amber-400);
+  font-size:12px;font-weight:700;letter-spacing:.14em;padding:5px 12px;border-radius:999px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.scene-body{padding:20px 20px 22px}
+.scene-q{font-size:16.5px;font-weight:700;line-height:1.7}
+.scene-q em{font-style:normal;color:var(--amber-400)}
+.opts{margin-top:16px;display:grid;gap:11px}
+.opt{
+  display:flex;align-items:center;gap:12px;text-align:left;
+  background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.22);
+  border-radius:var(--radius-md);padding:14px 15px;
+  color:#fff;font-size:14px;line-height:1.55;transition:all .2s;
+}
+.opt .opt-key{
+  width:26px;height:26px;flex:none;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700;transition:all .2s;
+}
+.opt:active{transform:scale(.98)}
+.opt.ok{background:rgba(46,158,107,.28);border-color:var(--green-500)}
+.opt.ok .opt-key{background:var(--green-500);border-color:var(--green-500);color:#fff}
+.opt.no{background:rgba(242,100,48,.26);border-color:var(--coral-500);animation:shake .45s}
+.opt.no .opt-key{background:var(--coral-500);border-color:var(--coral-500);color:#fff}
+.opt.dim{opacity:.42}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.scene-fb{
+  display:none;margin-top:14px;border-radius:var(--radius-md);
+  background:rgba(7,26,48,.55);border-left:4px solid var(--amber-400);
+  padding:13px 15px;font-size:14px;line-height:1.75;color:rgba(255,255,255,.92);
+}
+.scene-fb.show{display:block;animation:fadeIn .4s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.scene-fb b{color:var(--amber-400);font-weight:700}
+.scene-next{
+  display:none;margin-top:16px;width:100%;
+  background:linear-gradient(135deg,var(--coral-500),#E84A1B);
+  color:#fff;font-size:15.5px;font-weight:700;letter-spacing:.1em;
+  padding:14px;border-radius:999px;box-shadow:0 10px 22px rgba(232,74,27,.35);
+}
+.scene-next.show{display:block}
+.scene-dots{display:flex;justify-content:center;gap:8px;margin-top:18px}
+.scene-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.28);transition:all .3s}
+.scene-dots i.on{width:24px;border-radius:99px;background:var(--amber-400)}
+
+/* ==================== 知识测试 ==================== */
+.quiz-panel{
+  margin-top:24px;background:var(--white);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);padding:22px 20px 24px;position:relative;overflow:hidden;
+}
+.quiz-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.quiz-count{font-size:13px;color:var(--ink-500);letter-spacing:.08em}
+.quiz-count b{color:var(--coral-500);font-size:20px;font-weight:900}
+.quiz-bar{flex:1;height:8px;border-radius:99px;background:var(--sand-200);overflow:hidden}
+.quiz-bar i{display:block;height:100%;width:10%;border-radius:99px;
+  background:linear-gradient(90deg,var(--coral-500),var(--amber-400));transition:width .4s ease}
+.quiz-q{
+  font-size:18px;font-weight:900;line-height:1.65;margin:20px 0 4px;
+  min-height:58px;
+}
+.quiz-sub{font-size:12.5px;color:var(--ink-500);margin-bottom:16px}
+.quiz-opts{display:grid;gap:11px}
+.q-opt{
+  display:flex;align-items:flex-start;gap:11px;text-align:left;
+  border:1.5px solid var(--sand-200);border-radius:var(--radius-md);
+  padding:13px 14px;background:var(--sand-50);font-size:14px;line-height:1.6;
+  color:var(--ink-900);transition:all .18s;
+}
+.q-opt .opt-key{
+  width:24px;height:24px;flex:none;border-radius:50%;margin-top:1px;
+  background:#fff;border:1.5px solid var(--sand-200);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--ink-500);
+  transition:all .18s;
+}
+.q-opt:active{transform:scale(.985)}
+.q-opt.ok{border-color:var(--green-500);background:#EDF8F2}
+.q-opt.ok .opt-key{background:var(--green-500);border-color:var(--green-500);color:#fff}
+.q-opt.no{border-color:var(--coral-500);background:#FEF0EA;animation:shake .45s}
+.q-opt.no .opt-key{background:var(--coral-500);border-color:var(--coral-500);color:#fff}
+.q-opt.dim{opacity:.45}
+.q-fb{display:none;margin-top:14px;font-size:14px;line-height:1.8;color:var(--ink-700);
+  background:var(--sand-100);border-left:4px solid var(--sea-500);border-radius:var(--radius-sm);
+  padding:12px 14px}
+.q-fb.show{display:block;animation:fadeIn .35s}
+.q-fb b{color:var(--sea-500)}
+.btn-next{
+  display:none;margin-top:16px;width:100%;
+  background:var(--navy-800);color:#fff;font-size:15.5px;font-weight:700;letter-spacing:.1em;
+  padding:14px;border-radius:999px;transition:transform .15s;
+}
+.btn-next.show{display:block}
+.btn-next:active{transform:scale(.97)}
+.result{
+  display:none;text-align:center;padding:16px 4px 4px;
+}
+.result.show{display:block;animation:fadeIn .5s}
+.result .r-badge{
+  width:118px;height:118px;margin:0 auto;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  background:radial-gradient(circle at 35% 30%,#4C94F8,var(--navy-800));
+  color:#fff;box-shadow:0 14px 30px rgba(11,42,74,.35);
+}
+.result .r-score{font-size:38px;font-weight:900;line-height:1}
+.result .r-total{font-size:13px;opacity:.85;margin-top:4px}
+.result h3{font-size:21px;font-weight:900;margin-top:18px}
+.result p{font-size:13.5px;color:var(--ink-500);margin-top:8px;line-height:1.8}
+.result .btn-again{
+  margin-top:18px;background:linear-gradient(135deg,var(--coral-500),#E84A1B);
+  color:#fff;font-size:15px;font-weight:700;padding:13px 34px;border-radius:999px;
+  box-shadow:0 10px 22px rgba(232,74,27,.35);
+}
+
+/* ==================== 应急包清单 ==================== */
+.kit-wrap{margin-top:24px;display:grid;gap:18px}
+.kit-img{height:200px;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-card)}
+.kit-img img{width:100%;height:100%;object-fit:cover;object-position:center}
+.kit-panel{
+  background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);
+  padding:20px;
+}
+.kit-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.kit-head h4{font-size:16px;font-weight:900}
+.kit-head .kit-count{font-size:13px;color:var(--ink-500)}
+.kit-head .kit-count b{color:var(--coral-500);font-weight:900;font-size:17px}
+.kit-note{font-size:13px;color:var(--ink-500);margin-bottom:14px;line-height:1.7}
+.kit-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.kit-item{
+  display:flex;align-items:center;gap:9px;
+  border:1.5px solid var(--sand-200);border-radius:var(--radius-sm);
+  padding:10px 11px;background:var(--sand-50);
+  font-size:13.5px;font-weight:500;transition:all .18s;text-align:left;
+}
+.kit-item .k-ico{
+  width:30px;height:30px;flex:none;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  background:#E9F0FA;color:var(--sea-500);transition:all .18s;
+}
+.kit-item .k-ico svg{width:17px;height:17px}
+.kit-item .k-check{
+  margin-left:auto;width:19px;height:19px;flex:none;border-radius:50%;
+  border:1.5px solid var(--sand-200);background:#fff;color:transparent;
+  display:flex;align-items:center;justify-content:center;transition:all .18s;
+}
+.kit-item .k-check svg{width:11px;height:11px}
+.kit-item.done{border-color:var(--green-500);background:#EDF8F2}
+.kit-item.done .k-ico{background:var(--green-500);color:#fff}
+.kit-item.done .k-check{background:var(--green-500);border-color:var(--green-500);color:#fff}
+.kit-done{
+  display:none;margin-top:14px;border-radius:var(--radius-md);
+  background:linear-gradient(135deg,#2E9E6B,#1F7A52);color:#fff;
+  padding:14px 16px;font-size:14px;font-weight:700;text-align:center;letter-spacing:.06em;
+}
+.kit-done.show{display:block;animation:fadeIn .5s}
+
+/* ==================== 求助电话（深色） ==================== */
+.calls{background:var(--navy-800);color:#fff}
+.calls .chapter-title{color:#fff}
+.calls .lead{color:rgba(255,255,255,.78)}
+.calls .chapter .label{color:rgba(255,255,255,.6)}
+.calls .chapter .num{border-color:var(--amber-400);color:var(--amber-400)}
+.calls .chapter .line{background:var(--amber-400)}
+.call-grid{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.call-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius-lg);padding:20px 16px 17px;text-align:center;
+  transition:transform .18s,background .2s;display:block;width:100%;
+}
+.call-card:active{transform:scale(.95)}
+.call-card:hover{background:rgba(255,255,255,.12)}
+.call-card .c-num{font-size:30px;font-weight:900;letter-spacing:.04em;line-height:1}
+.call-card .c-name{font-size:12.5px;margin-top:8px;color:rgba(255,255,255,.82);letter-spacing:.1em}
+.call-card .c-tag{display:inline-block;margin-top:9px;font-size:10.5px;color:var(--amber-400);
+  border:1px solid rgba(246,196,69,.5);padding:2px 10px;border-radius:99px;letter-spacing:.08em}
+.call-card.red .c-num{color:#FF6B5E}
+.call-card.orange .c-num{color:var(--coral-400)}
+.call-card.green .c-num{color:#5BD6A0}
+.call-card.blue .c-num{color:var(--cyan-400)}
+.call-tip{
+  margin-top:16px;display:flex;gap:9px;align-items:flex-start;
+  background:rgba(255,255,255,.06);border-radius:var(--radius-md);padding:13px 15px;
+  font-size:14px;line-height:1.75;color:rgba(255,255,255,.8);
+}
+.call-tip svg{width:17px;height:17px;flex:none;margin-top:2px;color:var(--amber-400)}
+
+/* ==================== 尾屏 ==================== */
+.finale{position:relative;color:#fff;padding:0;overflow:hidden}
+.finale-bg{position:absolute;inset:0;background-image:url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/GAlRb2ZRqo4MZfxrdGMccpcUnGM');
+  background-size:cover;background-position:center}
+.finale-veil{position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(7,26,48,.80) 0%,rgba(7,26,48,.55) 34%,rgba(7,26,48,.92) 100%)}
+.finale-body{position:relative;z-index:2;padding:120px 26px calc(env(safe-area-inset-bottom,0px) + 34px);text-align:center}
+.finale .f-slogan{
+  font-family:var(--font-serif);font-weight:700;font-size:23px;line-height:1.7;
+  text-shadow:0 2px 14px rgba(0,0,0,.4);
+}
+.finale .f-slogan b{color:var(--amber-400)}
+.finale .f-sub{font-size:14px;color:rgba(255,255,255,.85);margin-top:14px;line-height:1.8}
+.finale .f-org{
+  display:inline-flex;align-items:center;gap:8px;margin-top:20px;
+  font-size:12.5px;letter-spacing:.2em;color:rgba(255,255,255,.75);
+  border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:8px 18px;
+  background:rgba(255,255,255,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.finale .f-org svg{width:14px;height:14px;color:var(--amber-400)}
+.finale .f-actions{display:grid;gap:12px;margin-top:26px;max-width:300px;margin-left:auto;margin-right:auto}
+.finale .f-hazard{position:absolute;left:0;right:0;bottom:0;z-index:2;height:10px;opacity:.9}
+
+/* ==================== 页脚 ==================== */
+.footer{background:var(--navy-900);color:rgba(255,255,255,.55);
+  text-align:center;font-size:11.5px;line-height:1.9;padding:20px 22px 28px;letter-spacing:.05em}
+.footer .f-line{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px}
+.footer svg{width:13px;height:13px;color:var(--coral-400)}
+
+/* ==================== 弹窗 / Toast ==================== */
+.modal-mask{
+  position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;
+  background:rgba(4,14,26,.66);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  padding:26px;
+}
+.modal-mask.show{display:flex;animation:fadeIn .25s}
+.modal{
+  background:var(--sand-50);border-radius:var(--radius-lg);max-width:340px;width:100%;
+  padding:26px 22px 20px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.4);
+  animation:modalPop .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes modalPop{from{transform:scale(.86);opacity:0}to{transform:scale(1);opacity:1}}
+.modal .m-num{font-size:34px;font-weight:900;color:var(--coral-500);letter-spacing:.05em}
+.modal .m-name{font-size:15px;font-weight:700;margin-top:6px}
+.modal .m-desc{font-size:12.5px;color:var(--ink-500);margin-top:10px;line-height:1.8}
+.modal .m-actions{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:20px}
+.modal .m-btn{padding:12px;border-radius:999px;font-size:14px;font-weight:700;transition:transform .15s}
+.modal .m-btn:active{transform:scale(.95)}
+.modal .m-cancel{background:var(--sand-200);color:var(--ink-700)}
+.modal .m-ok{background:linear-gradient(135deg,var(--coral-500),#E84A1B);color:#fff}
+.toast{
+  position:fixed;top:calc(env(safe-area-inset-top,0px) + 18px);left:50%;transform:translate(-50%,-16px);
+  z-index:150;background:var(--navy-900);color:#fff;font-size:13.5px;
+  padding:11px 20px;border-radius:999px;opacity:0;pointer-events:none;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);transition:all .3s;max-width:86%;text-align:center;
+  border:1px solid rgba(255,255,255,.14);
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ==================== 顶部快捷提示 ==================== */
+.a11y-hint{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div class="a11y-hint" role="status" aria-live="polite" id="srHint"></div>
+
+<div class="stage">
+<div class="page" id="page">
+
+  <!-- 滚动进度条 -->
+  <div class="progress-wrap" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- ===== 封面 ===== -->
+  <section class="cover" id="cover" aria-label="封面">
+    <div class="cover-bg" role="img" aria-label="青岛海岸城市夜景与应急守护主题插画"></div>
+    <div class="cover-veil"></div>
+    <div class="cover-tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      青岛市应急安全教育宣传
+    </div>
+    <div class="cover-body">
+      <p class="cover-kicker">沿海城市 · 台风 · 暴雨 · 城市安全</p>
+      <h1 class="cover-title">应急安全<br><span class="hl">守护青岛</span></h1>
+      <p class="cover-sub">台风、暴雨、火灾、地震……灾害不打招呼。<br>多掌握一项应急技能，就多一分守护自己与家人的底气。</p>
+      <div class="cover-cta-row">
+        <button class="btn-primary" id="btnStart" type="button">
+          开启安全之旅
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="btn-ghost" id="btnSkip" type="button">知识测试</button>
+      </div>
+    </div>
+    <div class="cover-scroll" aria-hidden="true">
+      上滑探索
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="cover-hazard hazard" aria-hidden="true"></div>
+  </section>
+
+  <svg class="wave sand flip" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,48 C240,90 480,0 720,24 C960,48 1200,84 1440,42 L1440,90 L0,90 Z"></path></svg>
+
+  <!-- ===== 01 序言 ===== -->
+  <section class="section prologue" id="prologue" aria-label="序言">
+    <div class="chapter rv">
+      <span class="num">01</span><span class="line"></span><span class="label">缘 起</span>
+    </div>
+    <h2 class="chapter-title rv">城市越繁华，<span class="serif">安全</span>越重要</h2>
+    <p class="lead rv">青岛三面环海、气候多变，夏秋季台风与暴雨多发；人口与建筑密集，火灾、燃气等城市风险时刻相伴。应急安全不是遥远的话题，而是每个青岛人都应掌握的生存常识。</p>
+
+    <div class="quote-card rv">
+      <span class="quote-mark">“</span>
+      <p class="q-text">安全是最大的民生，<br>也是城市最温暖的底色。</p>
+      <p class="q-by">—— 平安青岛 · 人人有责</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-item rv">
+        <span class="ico sea"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0"/><path d="M3 19c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0"/><path d="M12 2v6"/><path d="m9.5 5.5 2.5-3 2.5 3"/></svg></span>
+        <div><h4>沿海台风暴雨</h4><p>台风、风暴潮、城市内涝在夏秋季多发，提前避险是关键。</p></div>
+      </div>
+      <div class="why-item rv">
+        <span class="ico coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
+        <div><h4>城市火灾风险</h4><p>高楼、商圈、老旧小区并存，火场逃生要快更要方法对。</p></div>
+      </div>
+      <div class="why-item rv">
+        <span class="ico amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>
+        <div><h4>滨海亲水风险</h4><p>海岸线漫长，野浴、离岸流、溺水等风险需要时时警惕。</p></div>
+      </div>
+      <div class="why-item rv">
+        <span class="ico green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span>
+        <div><h4>家庭日常隐患</h4><p>燃气泄漏、用电安全、地震应急，习惯决定安全上限。</p></div>
+      </div>
+    </div>
+    <div class="hazard" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===== 02 风险认知 ===== -->
+  <section class="section" id="risks" aria-label="风险认知">
+    <div class="chapter rv">
+      <span class="num">02</span><span class="line"></span><span class="label">风 险</span>
+    </div>
+    <h2 class="chapter-title rv">青岛常见的<span class="serif">六类风险</span></h2>
+    <p class="lead rv">点击卡片翻面，先认清危险信号，再记住应对要点。把每一步变成肌肉记忆。</p>
+
+    <div class="cards-grid">
+
+      <div class="flip rv" role="button" tabindex="0" aria-label="台风与风暴潮，点击查看应对方法">
+        <div class="flip-inner">
+          <div class="face face-front">
+            <div class="card-img"><img src="https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/C2wjbsenQoHWAYxQiCjcldL7nov" alt="台风与风暴潮插画" loading="lazy"><span class="card-name">台风 · 风暴潮</span></div>
+            <div class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>点击翻面</div>
+          </div>
+          <div class="face face-back navy1">
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>台风 · 风暴潮</h4>
+            <div class="blk"><span class="blk-label">危险信号</span><ul><li>预警升级、狂风巨浪</li><li>海水倒灌、低洼积水</li></ul></div>
+            <div class="blk"><span class="blk-label">应对要点</span><ul><li>关注预警，进坚固建筑</li><li>远离海边、堤坝与低洼地</li><li>加固门窗，备好水粮</li></ul></div>
+            <div class="back-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>点击翻回</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip rv" role="button" tabindex="0" aria-label="暴雨与城市内涝，点击查看应对方法">
+        <div class="flip-inner">
+          <div class="face face-front">
+            <div class="card-img"><img src="https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/MSRdbBxUooVYhdx9sNBcYBVknXf" alt="暴雨与城市内涝插画" loading="lazy"><span class="card-name">暴雨 · 城市内涝</span></div>
+            <div class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>点击翻面</div>
+          </div>
+          <div class="face face-back navy1">
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4.5 6 7.4 6 11a6 6 0 0 1-12 0c0-3.6 3-6.5 6-11z"/></svg>暴雨 · 城市内涝</h4>
+            <div class="blk"><span class="blk-label">危险信号</span><ul><li>短时强降雨、路面急积水</li><li>桥洞低洼路段被淹</li></ul></div>
+            <div class="blk"><span class="blk-label">应对要点</span><ul><li>避开桥洞与低洼路段</li><li>不涉水、远离电线杆</li><li>车辆被困果断弃车</li></ul></div>
+            <div class="back-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>点击翻回</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip rv" role="button" tabindex="0" aria-label="火灾，点击查看应对方法">
+        <div class="flip-inner">
+          <div class="face face-front">
+            <div class="card-img"><img src="https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/Au7RbP12Jo8XI5xcRO9clpFtnRb" alt="火灾救援插画" loading="lazy"><span class="card-name">火灾</span></div>
+            <div class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>点击翻面</div>
+          </div>
+          <div class="face face-back navy2">
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>火灾</h4>
+            <div class="blk"><span class="blk-label">危险信号</span><ul><li>闻到烟味、看到明火</li><li>消防警报骤然响起</li></ul></div>
+            <div class="blk"><span class="blk-label">应对要点</span><ul><li>低姿匍匐、湿毛巾捂口鼻</li><li>走楼梯，绝不乘坐电梯</li><li>先逃生再报警 119</li></ul></div>
+            <div class="back-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>点击翻回</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip rv" role="button" tabindex="0" aria-label="地震，点击查看应对方法">
+        <div class="flip-inner">
+          <div class="face face-front">
+            <div class="card-img"><img src="https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/DKnbbE4LDorF7LxVqsIcr7arnAh" alt="地震避震插画" loading="lazy"><span class="card-name">地震</span></div>
+            <div class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>点击翻面</div>
+          </div>
+          <div class="face face-back navy1">
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l2-6 4 14 3-10 2 2h5"/></svg>地震</h4>
+            <div class="blk"><span class="blk-label">危险信号</span><ul><li>地面晃动、吊灯摇晃</li><li>物品坠落、墙体开裂</li></ul></div>
+            <div class="blk"><span class="blk-label">应对要点</span><ul><li>伏地、遮挡、手抓牢</li><li>远离窗户与高大重物</li><li>震后撤往空旷地带</li></ul></div>
+            <div class="back-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>点击翻回</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip rv" role="button" tabindex="0" aria-label="海边溺水，点击查看应对方法">
+        <div class="flip-inner">
+          <div class="face face-front">
+            <div class="card-img"><img src="https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/Sdl8bsitIoBGNuxm6HqcfrHinMg" alt="海边溺水防护插画" loading="lazy"><span class="card-name">海边溺水</span></div>
+            <div class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>点击翻面</div>
+          </div>
+          <div class="face face-back navy1">
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0"/><path d="M3 19c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0"/></svg>海边溺水</h4>
+            <div class="blk"><span class="blk-label">危险信号</span><ul><li>离岸流、巨浪来袭</li><li>禁止下海警示旗升起</li></ul></div>
+            <div class="blk"><span class="blk-label">应对要点</span><ul><li>不野浴、不进非游泳区</li><li>遇溺水先呼救拨 120</li><li>抛救生器材不盲目下水</li></ul></div>
+            <div class="back-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>点击翻回</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip rv" role="button" tabindex="0" aria-label="燃气泄漏，点击查看应对方法">
+        <div class="flip-inner">
+          <div class="face face-front">
+            <div class="card-img"><img src="https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/Tn6Jb22dzotMTDxl8hvcdQS8n8b" alt="燃气泄漏处置插画" loading="lazy"><span class="card-name">燃气泄漏</span></div>
+            <div class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>点击翻面</div>
+          </div>
+          <div class="face face-back navy2">
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/><path d="M12 12v3"/></svg>燃气泄漏</h4>
+            <div class="blk"><span class="blk-label">危险信号</span><ul><li>闻到刺鼻燃气味</li><li>燃气报警器鸣响</li></ul></div>
+            <div class="blk"><span class="blk-label">应对要点</span><ul><li>开窗通风、关闭阀门</li><li>不开关电器、不点火</li><li>撤到室外再打电话</li></ul></div>
+            <div class="back-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>点击翻回</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <svg class="wave navy" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,48 C240,90 480,0 720,24 C960,48 1200,84 1440,42 L1440,90 L0,90 Z"></path></svg>
+
+  <!-- ===== 03 情景模拟 ===== -->
+  <section class="section scenario" id="scenario" aria-label="情景模拟">
+    <div class="chapter rv">
+      <span class="num">03</span><span class="line"></span><span class="label">情 景</span>
+    </div>
+    <h2 class="chapter-title rv">危险就在眼前，<span class="serif">你会怎么做？</span></h2>
+    <p class="lead rv">三个真实场景模拟。选出正确做法，看看你的第一反应够不够快、够不够稳。</p>
+
+    <div class="scene rv" id="sceneBox">
+      <div class="scene-img">
+        <img id="sceneImg" src="" alt="情景插画">
+        <span class="scene-no" id="sceneNo"></span>
+      </div>
+      <div class="scene-body">
+        <p class="scene-q" id="sceneQ"></p>
+        <div class="opts" id="sceneOpts"></div>
+        <div class="scene-fb" id="sceneFb"></div>
+        <button class="scene-next" id="sceneNext" type="button">下一个情景</button>
+      </div>
+    </div>
+    <div class="scene-dots" id="sceneDots" aria-hidden="true"></div>
+  </section>
+
+  <svg class="wave sand" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,48 C240,90 480,0 720,24 C960,48 1200,84 1440,42 L1440,90 L0,90 Z"></path></svg>
+
+  <!-- ===== 04 知识测试 ===== -->
+  <section class="section" id="quiz" aria-label="知识测试">
+    <div class="chapter rv">
+      <span class="num">04</span><span class="line"></span><span class="label">测 试</span>
+    </div>
+    <h2 class="chapter-title rv">应急知识<span class="serif">小测验</span></h2>
+    <p class="lead rv">5 道题，测测你的应急指数。答完看看自己属于哪个段位。</p>
+
+    <div class="quiz-panel rv" id="quizPanel">
+      <div class="quiz-top">
+        <span class="quiz-count"><b id="quizNow">1</b> / 5</span>
+        <div class="quiz-bar" aria-hidden="true"><i id="quizFill"></i></div>
+      </div>
+      <p class="quiz-q" id="quizQ"></p>
+      <p class="quiz-sub" id="quizSub"></p>
+      <div class="quiz-opts" id="quizOpts"></div>
+      <div class="q-fb" id="quizFb"></div>
+      <button class="btn-next" id="quizNext" type="button">下一题</button>
+      <div class="result" id="quizResult">
+        <div class="r-badge"><span class="r-score" id="rScore">5</span><span class="r-total">/ 5 分</span></div>
+        <h3 id="rTitle"></h3>
+        <p id="rDesc"></p>
+        <button class="btn-again" id="btnAgain" type="button">再测一次</button>
+      </div>
+    </div>
+  </section>
+
+  <svg class="wave navy" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,48 C240,90 480,0 720,24 C960,48 1200,84 1440,42 L1440,90 L0,90 Z"></path></svg>
+
+  <!-- ===== 05 家庭应急包 ===== -->
+  <section class="section scenario" id="kit" aria-label="家庭应急包清单">
+    <div class="chapter rv">
+      <span class="num">05</span><span class="line"></span><span class="label">准 备</span>
+    </div>
+    <h2 class="chapter-title rv">家庭应急包，<span class="serif">你备好了吗？</span></h2>
+    <p class="lead rv">点击勾选家中已备好的应急物资，看看还缺什么。</p>
+
+    <div class="kit-wrap">
+      <div class="kit-img rv"><img src="https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/SQvWbOV5Uoxl1ixTqnacvf7Unmh" alt="家庭应急包内容物插画" loading="lazy"></div>
+      <div class="kit-panel rv">
+        <div class="kit-head">
+          <h4>家庭应急物资清单</h4>
+          <span class="kit-count">已准备 <b id="kitNum">0</b>/10</span>
+        </div>
+        <p class="kit-note">建议把应急包放在门口玄关或随手可及处，并定期检查食品与药品有效期。</p>
+        <div class="kit-list" id="kitList"></div>
+        <div class="kit-done" id="kitDone">应急包已就绪，为你的安全意识点赞</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 06 求助电话 ===== -->
+  <section class="section calls" id="calls" aria-label="求助电话">
+    <div class="chapter rv">
+      <span class="num">06</span><span class="line"></span><span class="label">求 助</span>
+    </div>
+    <h2 class="chapter-title rv">关键时刻，<span class="serif">记住这些号码</span></h2>
+    <p class="lead rv">报警求救时保持冷静，说清地点、人数与现场情况。</p>
+
+    <div class="call-grid">
+      <button class="call-card red rv" type="button" data-num="110" data-name="报警服务" data-desc="遇到刑事治安案件、人身安全受威胁等紧急情况时拨打。">
+        <div class="c-num">110</div>
+        <div class="c-name">报警服务</div>
+        <span class="c-tag">治安 · 紧急求助</span>
+      </button>
+      <button class="call-card orange rv" type="button" data-num="119" data-name="火警救援" data-desc="火灾、危险化学品事故以及抢险救援等紧急情况时拨打。">
+        <div class="c-num">119</div>
+        <div class="c-name">火警救援</div>
+        <span class="c-tag">火灾 · 抢险救援</span>
+      </button>
+      <button class="call-card green rv" type="button" data-num="120" data-name="医疗急救" data-desc="突发疾病、意外受伤需要紧急医疗救助时拨打。">
+        <div class="c-num">120</div>
+        <div class="c-name">医疗急救</div>
+        <span class="c-tag">急病 · 意外伤害</span>
+      </button>
+      <button class="call-card blue rv" type="button" data-num="122" data-name="交通事故" data-desc="发生道路交通事故，需要交警到场处理时拨打。">
+        <div class="c-num">122</div>
+        <div class="c-name">交通事故</div>
+        <span class="c-tag">道路交通报警</span>
+      </button>
+    </div>
+
+    <div class="call-tip rv">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      <span>未成年人遇到险情，应先向身边的大人求助。请勿拨打报警电话报假警、谎报警情，谎报将被依法处理。</span>
+    </div>
+  </section>
+
+  <!-- PART2 -->
+
+  <!-- ===== 尾屏 ===== -->
+  <section class="finale" id="finale" aria-label="尾屏">
+    <div class="finale-bg" role="img" aria-label="风雨过后青岛清晨的安宁景象"></div>
+    <div class="finale-veil"></div>
+    <div class="finale-body">
+      <p class="f-slogan rv">风雨过后，<b>平安青岛</b><br>因每一个你而更安心</p>
+      <p class="f-sub rv">把这份应急知识分享给家人朋友<br>让安全成为整座城市共同的习惯</p>
+      <p class="f-org rv">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        青岛市应急安全教育主题宣传
+      </p>
+      <div class="f-actions rv">
+        <button class="btn-primary" id="btnShare" type="button">分享给家人</button>
+        <button class="btn-ghost" id="btnRetest" type="button">再测一次知识</button>
+      </div>
+    </div>
+    <div class="f-hazard hazard" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===== 页脚 ===== -->
+  <footer class="footer">
+    <p class="f-line">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10z"/></svg>
+      人人讲安全 · 个个会应急
+    </p>
+    <p>本页面为应急安全公益科普演示，<br>数据与知识均来自公开应急科普资料</p>
+  </footer>
+
+</div>
+</div>
+
+<!-- 拨打确认弹窗 -->
+<div class="modal-mask" id="callModal" role="dialog" aria-modal="true" aria-labelledby="callModalName">
+  <div class="modal">
+    <div class="m-num" id="callModalNum"></div>
+    <div class="m-name" id="callModalName"></div>
+    <p class="m-desc" id="callModalDesc"></p>
+    <div class="m-actions">
+      <button class="m-btn m-cancel" id="callCancel" type="button">取消</button>
+      <button class="m-btn m-ok" id="callOk" type="button">确认拨打</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,c){return (c||document).querySelector(s)};
+var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+
+/* ---------- Toast 与读屏提示 ---------- */
+var toastEl=$('#toast'),toastTimer=null;
+function toast(msg){
+  toastEl.textContent=msg;toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){toastEl.classList.remove('show')},2400);
+}
+function sr(text){$('#srHint').textContent=text;}
+
+/* ---------- 情景图片常量 ---------- */
+var IMG={
+  typhoon:'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/C2wjbsenQoHWAYxQiCjcldL7nov',
+  fire:'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/Au7RbP12Jo8XI5xcRO9clpFtnRb',
+  beach:'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/Sdl8bsitIoBGNuxm6HqcfrHinMg'
+};
+
+/* ---------- 滚动进度条 ---------- */
+var bar=$('#progressBar');
+function onScroll(){
+  var doc=document.documentElement;
+  var max=doc.scrollHeight-window.innerHeight;
+  var p=max>0?(window.scrollY/max*100):0;
+  bar.style.width=p+'%';
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+
+/* ---------- 滚动显现 ---------- */
+var rvObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('on');rvObs.unobserve(e.target);}
+  });
+},{threshold:.12});
+$$('.rv').forEach(function(el){rvObs.observe(el)});
+
+/* ---------- 封面按钮 ---------- */
+$('#btnStart').addEventListener('click',function(){
+  $('#risks').scrollIntoView({behavior:'smooth'});
+});
+$('#btnSkip').addEventListener('click',function(){
+  $('#quiz').scrollIntoView({behavior:'smooth'});
+});
+
+/* ---------- 风险翻卡 ---------- */
+$$('.flip').forEach(function(card){
+  function toggle(){
+    var flipped=card.classList.toggle('flipped');
+    sr(flipped?'已展开：'+card.getAttribute('aria-label'):'已收起');
+  }
+  card.addEventListener('click',toggle);
+  card.addEventListener('keydown',function(ev){
+    if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();toggle();}
+  });
+});
+
+/* ---------- 情景模拟 ---------- */
+var SCENES=[
+  {no:'情景 1 · 台风',img:IMG.typhoon,alt:'台风与风暴潮插画',
+   q:'台风橙色预警生效，海边栈道仍有游客拍照观浪。你应该怎么做？',
+   opts:[
+     {t:'上前提醒，并协助游客撤离到安全场所',ok:true,fb:'台风天风浪凶险，海边极易被巨浪卷走。发现有人滞留危险区域，应及时提醒，并帮助他们转移到坚固建筑内。'},
+     {t:'一起凑热闹，多拍几张照片',ok:false,fb:'台风天观浪非常危险，巨浪可能瞬间吞没堤岸和栈道，切勿靠近海边。'},
+     {t:'事不关己，转身离开',ok:false,fb:'应急互助是城市安全的一部分，提醒他人远离危险同样重要。'}
+   ]},
+  {no:'情景 2 · 火灾',img:IMG.fire,alt:'火灾救援插画',
+   q:'楼道里浓烟弥漫，你家住在 8 楼。此刻你应该怎么做？',
+   opts:[
+     {t:'低姿弯腰，用湿毛巾捂住口鼻，沿楼梯向下撤离',ok:true,fb:'烟气向上蔓延且高温有毒，低姿前进、捂住口鼻能减少吸入，走楼梯逃生最稳妥。'},
+     {t:'乘坐电梯快速下楼',ok:false,fb:'火灾时电梯可能断电停运、轿厢被烟气灌入，千万不要乘电梯逃生。'},
+     {t:'从窗户跳下去',ok:false,fb:'高楼跳窗生还概率极低，应固守待援，到窗边用鲜艳物品呼救。'}
+   ]},
+  {no:'情景 3 · 溺水',img:IMG.beach,alt:'海边溺水防护插画',
+   q:'海边有人溺水，在水中挣扎。你应该怎么做？',
+   opts:[
+     {t:'大声呼救，拨打 120，就近抛掷救生圈',ok:true,fb:'岸上施救优先：先呼救报警，再借助救生圈、绳索等器材，避免盲目下水。'},
+     {t:'立刻跳入海中施救',ok:false,fb:'非专业救援者贸然下水，极易被溺水者抱住而双双遇险，应先岸上施救、尽快报警。'},
+     {t:'先拍照发个朋友圈',ok:false,fb:'救援黄金时间极短，每一秒都很关键，应立即呼救并报警。'}
+   ]}
+];
+var sceneIdx=0,sceneLock=false;
+var sceneImg=$('#sceneImg'),sceneNo=$('#sceneNo'),sceneQ=$('#sceneQ'),
+    sceneOpts=$('#sceneOpts'),sceneFb=$('#sceneFb'),sceneNext=$('#sceneNext'),sceneDots=$('#sceneDots');
+function renderScene(){
+  var s=SCENES[sceneIdx];
+  sceneImg.src=s.img;sceneImg.alt=s.alt||s.no+'插画';
+  sceneNo.textContent=s.no;
+  sceneQ.innerHTML=s.q;
+  sceneOpts.innerHTML='';
+  s.opts.forEach(function(o,i){
+    var b=document.createElement('button');
+    b.type='button';b.className='opt';
+    b.innerHTML='<span class="opt-key">'+'ABC'[i]+'</span><span>'+o.t+'</span>';
+    b.addEventListener('click',function(){pickScene(i,b)});
+    sceneOpts.appendChild(b);
+  });
+  sceneFb.classList.remove('show');sceneFb.innerHTML='';
+  sceneNext.textContent=(sceneIdx<SCENES.length-1)?'下一个情景':'完成情景演练';
+  sceneNext.classList.remove('show');
+  sceneDots.innerHTML='';
+  SCENES.forEach(function(_,i){
+    var d=document.createElement('i');
+    if(i===sceneIdx)d.className='on';
+    sceneDots.appendChild(d);
+  });
+  sceneLock=false;
+}
+function pickScene(i,btn){
+  if(sceneLock)return;sceneLock=true;
+  var s=SCENES[sceneIdx],o=s.opts[i];
+  $$('.opt',sceneOpts).forEach(function(b,j){
+    if(j!==i&&s.opts[j].ok)b.classList.add('dim');
+  });
+  btn.classList.add(o.ok?'ok':'no');
+  sceneFb.innerHTML='<b>'+(o.ok?'回答正确。':'回答错误。')+'</b>'+o.fb;
+  sceneFb.classList.add('show');
+  sceneNext.classList.add('show');
+  sr((o.ok?'正确':'错误')+'：'+o.fb);
+}
+sceneNext.addEventListener('click',function(){
+  if(sceneIdx<SCENES.length-1){sceneIdx++;renderScene();}
+  else{sceneNext.classList.remove('show');toast('情景演练完成，应急意识 +1');}
+});
+renderScene();
+
+/* ---------- 知识测试 ---------- */
+var QUIZ=[
+  {q:'在青岛遇到台风天气，最安全的做法是？',sub:'台风 · 避险',
+   a:['到海边看巨浪','远离海岸与低洼地带，留在坚固室内','开车去海边兜风','在礁石上拍照打卡'],ans:1,
+   fb:'台风天风大浪急，海边、堤坝和低洼地带风险极高，应远离并留在坚固建筑内，关注官方预警。'},
+  {q:'闻到家里有明显的燃气味，第一步应该做什么？',sub:'燃气 · 泄漏',
+   a:['立即开灯检查','打开抽油烟机通风','先开窗通风、关闭阀门，再到室外报警','留在室内打电话求助'],ans:2,
+   fb:'燃气泄漏时，任何电器开关和明火都可能引发爆炸，应先通风、关阀，撤到室外再拨打电话报警。'},
+  {q:'高层住宅楼道起火、浓烟蔓延时，应该怎么逃生？',sub:'火灾 · 逃生',
+   a:['乘坐电梯快速下楼','躲在卫生间等待','从窗户跳下','低姿弯腰、湿毛巾捂口鼻走楼梯'],ans:3,
+   fb:'烟气向上蔓延，低姿前进能减少吸入；电梯在火灾中极易停运断电，走楼梯最安全。'},
+  {q:'地震发生时你正在室内，正确的避震动作是？',sub:'地震 · 避险',
+   a:['跑向电梯下楼','伏地、遮挡、手抓牢，护住头颈','站在窗边观察','点燃打火机照明'],ans:1,
+   fb:'地震时先伏低身体，躲到坚固桌下并抓牢桌腿、护住头颈；远离窗户，不乘电梯，震后再有序撤离。'},
+  {q:'发现有人在海边溺水挣扎，正确的做法是？',sub:'溺水 · 救援',
+   a:['立即跳下水施救','在岸边围观','大声呼救、拨打 120，抛掷救生器材','用手机录像'],ans:2,
+   fb:'非专业人士贸然下水容易被一起卷入险境，应优先呼救报警，利用救生圈、绳索等器材岸上施救。'}
+];
+var qIdx=0,qScore=0,qLock=false;
+var quizQ=$('#quizQ'),quizSub=$('#quizSub'),quizOpts=$('#quizOpts'),quizFb=$('#quizFb'),
+    quizNext=$('#quizNext'),quizNow=$('#quizNow'),quizFill=$('#quizFill'),quizResult=$('#quizResult');
+function renderQuiz(){
+  qLock=false;
+  var q=QUIZ[qIdx];
+  quizNow.textContent=qIdx+1;
+  quizFill.style.width=(qIdx/QUIZ.length*100)+'%';
+  quizQ.textContent=q.q;
+  quizSub.textContent=q.sub;
+  quizFb.classList.remove('show');quizFb.innerHTML='';
+  quizNext.classList.remove('show');
+  quizOpts.innerHTML='';
+  q.a.forEach(function(t,i){
+    var b=document.createElement('button');
+    b.type='button';b.className='q-opt';
+    b.innerHTML='<span class="opt-key">'+'ABCD'[i]+'</span><span>'+t+'</span>';
+    b.addEventListener('click',function(){pickQuiz(i,b)});
+    quizOpts.appendChild(b);
+  });
+}
+function pickQuiz(i,btn){
+  if(qLock)return;qLock=true;
+  var q=QUIZ[qIdx],ok=(i===q.ans);
+  if(ok)qScore++;
+  $$('.q-opt',quizOpts).forEach(function(b,j){
+    if(j!==i)b.classList.add('dim');
+  });
+  btn.classList.add(ok?'ok':'no');
+  if(!ok){$$('.q-opt',quizOpts)[q.ans].classList.add('ok');}
+  quizFb.innerHTML='<b>'+(ok?'答对了。':'答错了。')+'</b>'+q.fb;
+  quizFb.classList.add('show');
+  quizFill.style.width=((qIdx+1)/QUIZ.length*100)+'%';
+  quizNext.textContent=(qIdx<QUIZ.length-1)?'下一题':'查看成绩';
+  quizNext.classList.add('show');
+  sr((ok?'答对了':'答错了')+'：'+q.fb);
+}
+quizNext.addEventListener('click',function(){
+  if(qIdx<QUIZ.length-1){qIdx++;renderQuiz();}
+  else{showResult();}
+});
+function showResult(){
+  quizOpts.innerHTML='';quizFb.classList.remove('show');quizNext.classList.remove('show');
+  quizQ.textContent='';quizSub.textContent='';
+  quizResult.classList.add('show');
+  $('#rScore').textContent=qScore;
+  var title,desc;
+  if(qScore===5){title='应急达人';desc='满分通关！你的应急知识储备已经非常扎实，记得把方法教给家人。';}
+  else if(qScore===4){title='安全能手';desc='表现很棒，只差一点点就满分。查漏补缺，温习答错的题目吧。';}
+  else if(qScore===3){title='基础扎实';desc='基础不错，建议把六类风险翻卡再仔细看一遍，强化记忆。';}
+  else{title='还需补课';desc='别灰心，从风险认知开始重新学一遍，安全技能值得反复练习。';}
+  $('#rTitle').textContent=title;
+  $('#rDesc').textContent=desc;
+  sr('测试完成，得分 '+qScore+' 分，'+title);
+}
+function resetQuiz(){
+  qIdx=0;qScore=0;
+  quizResult.classList.remove('show');
+  renderQuiz();
+}
+renderQuiz();
+$('#btnAgain').addEventListener('click',resetQuiz);
+
+/* ---------- 家庭应急包清单 ---------- */
+var KIT=[
+  {n:'强光手电筒',i:'<path d="M8 3h8v2H8z"/><path d="M7 5h10l1.5 3h-13L7 5z"/><path d="M7.5 8h9v9a3 3 0 0 1-3 3h-3a3 3 0 0 1-3-3V8z"/><circle cx="12" cy="14" r="1.2"/>'},
+  {n:'急救药箱',i:'<path d="M9 3h6v3h4a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4V3z"/><path d="M12 11v6"/><path d="M9 14h6"/>'},
+  {n:'饮用水',i:'<path d="M12 3c3 4.5 6 7.4 6 11a6 6 0 0 1-12 0c0-3.6 3-6.5 6-11z"/>'},
+  {n:'压缩食品',i:'<path d="M7 12V9a5 5 0 0 1 10 0v3"/><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3z"/>'},
+  {n:'应急口哨',i:'<path d="M8 7h6a4 4 0 0 1 4 4v1l3 1.5v3L18 18v1a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-1H8a4 4 0 0 1-4-4v-1a4 4 0 0 1 4-4z"/><circle cx="8.5" cy="12" r="1"/>'},
+  {n:'保温毯',i:'<path d="M4 9h16v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V9z"/><path d="M4 9V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2"/><path d="M6 13c1.5 1.5 3 1.5 4.5 0s3-1.5 4.5 0 3 1.5 4.5 0"/>'},
+  {n:'充电宝',i:'<path d="M9 3h6v2h2a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2V3z"/><path d="M10 3.5h4"/>'},
+  {n:'证件复印件',i:'<path d="M4 6h16v12H4V6z"/><path d="M4 10h16"/><path d="M8 14h4"/><path d="M8 17h6"/>'},
+  {n:'常用药品',i:'<path d="M10.5 4.5a4.5 4.5 0 0 1 6.4 0l2.6 2.6a4.5 4.5 0 0 1-6.4 6.4l-2.6-2.6a4.5 4.5 0 0 1 0-6.4z"/><path d="M10 8l6 6"/>'},
+  {n:'备用现金',i:'<circle cx="12" cy="12" r="8"/><path d="M9 9h6"/><path d="M12 9v6"/><path d="M10.2 12h3.6"/>'}
+];
+var kitFlags=new Array(KIT.length).fill(false);
+var kitList=$('#kitList'),kitNum=$('#kitNum'),kitDoneEl=$('#kitDone');
+KIT.forEach(function(it,i){
+  var b=document.createElement('button');
+  b.type='button';b.className='kit-item';b.setAttribute('aria-pressed','false');
+  b.innerHTML='<span class="k-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+it.i+'</svg></span><span>'+it.n+'</span><span class="k-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>';
+  b.addEventListener('click',function(){
+    kitFlags[i]=!kitFlags[i];
+    b.classList.toggle('done',kitFlags[i]);
+    b.setAttribute('aria-pressed',kitFlags[i]?'true':'false');
+    var n=kitFlags.filter(Boolean).length;
+    kitNum.textContent=n;
+    if(n===KIT.length){kitDoneEl.classList.add('show');toast('家庭应急包已就绪');}
+    else{kitDoneEl.classList.remove('show');}
+    sr('已准备 '+n+' 项应急物资');
+  });
+  kitList.appendChild(b);
+});
+
+/* ---------- 求助电话弹窗 ---------- */
+var callNum=null;
+var callModal=$('#callModal');
+$$('.call-card').forEach(function(c){
+  c.addEventListener('click',function(){
+    callNum=c.getAttribute('data-num');
+    $('#callModalNum').textContent=callNum;
+    $('#callModalName').textContent=c.getAttribute('data-name');
+    $('#callModalDesc').textContent=c.getAttribute('data-desc');
+    callModal.classList.add('show');
+  });
+});
+function closeModal(){callModal.classList.remove('show');callNum=null;}
+$('#callCancel').addEventListener('click',closeModal);
+callModal.addEventListener('click',function(e){if(e.target===callModal)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&callModal.classList.contains('show'))closeModal();});
+$('#callOk').addEventListener('click',function(){
+  if(!callNum){closeModal();return;}
+  var isMobile=/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  if(isMobile){window.location.href='tel:'+callNum;}
+  else{toast('演示页面不会真实拨出，请牢记 '+callNum);}
+  sr('已确认拨打 '+callNum);
+  closeModal();
+});
+
+/* ---------- 尾屏：分享与再测 ---------- */
+$('#btnShare').addEventListener('click',function(){
+  var shareData={title:'守护青岛 · 应急安全同行',text:'青岛应急安全科普 H5：风险翻卡、情景模拟、知识测试，来测测你的应急指数！',url:location.href};
+  if(navigator.share){
+    navigator.share(shareData).catch(function(){});
+  }else if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(location.href)
+      .then(function(){toast('链接已复制，快分享给家人吧')})
+      .catch(function(){toast('请使用浏览器菜单分享本页')});
+  }else{
+    toast('请使用浏览器菜单分享本页');
+  }
+});
+$('#btnRetest').addEventListener('click',function(){
+  resetQuiz();
+  $('#quiz').scrollIntoView({behavior:'smooth'});
+});
+
+})();
+</script>
+</body>
+</html>
